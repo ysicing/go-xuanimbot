@@ -1,3 +1,6 @@
+// AGPL License
+// Copyright (c) 2023 ysicing <i@ysicing.me>
+
 package xuanim
 
 type ClientOptionFunc func(*Client) error
@@ -34,5 +37,11 @@ func WithUserAgent(ua string) ClientOptionFunc {
 			ua = userAgent
 		}
 		return c.setReqUserAgent(ua)
+	}
+}
+
+func WithCustom(custom bool) ClientOptionFunc {
+	return func(c *Client) error {
+		return c.setCustom(custom)
 	}
 }

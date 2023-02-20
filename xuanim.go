@@ -1,6 +1,10 @@
+// AGPL License
+// Copyright (c) 2023 ysicing <i@ysicing.me>
+
 package xuanim
 
 import (
+	"fmt"
 	"net/url"
 
 	"github.com/imroc/req/v3"
@@ -15,6 +19,7 @@ type Client struct {
 	baseURL *url.URL
 	Token   string // token
 	Caller  string // caller 机器人
+	Custom  bool   // 是否定制
 
 	Notification *NotificationService
 }
@@ -67,6 +72,17 @@ func (c *Client) setDisableProxy() error {
 func (c *Client) setReqUserAgent(ua string) error {
 	c.client.SetUserAgent(ua)
 	return nil
+}
+
+func (c *Client) setCustom(custom bool) error {
+	c.Custom = custom
+	return nil
+}
+
+func (c *Client) CustomRequestURL(path, t string) string {
+	u := *c.baseURL
+	u.Path = c.baseURL.Path + path
+	return fmt.Sprintf("%s?m=im&f=%s&code=%s&token=%s", u.String(), t, c.Caller, c.Token)
 }
 
 func (c *Client) RequestURL(path string) string {
