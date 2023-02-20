@@ -4,9 +4,7 @@
 
 # 使用
 
-```go
-
-```
+参考[example](./example/example.go)
 
 # 文档
 
